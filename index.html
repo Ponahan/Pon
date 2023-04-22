@@ -1,0 +1,293 @@
+<!--
+    ผมทำให้มันป่าพิศวงโดยให้สัตว์วิเศษในหัวข้อมาเป็นสัตว์ล฿กลับในป่าห่างไกลที่มีตำนานมากมาย ซึ่ง 
+    function ที่ใช้จะมีตัวหิ่งห้อย ซึ่งสามารถเอาเมาส์ไปปัดๆที่มันเเละจะบินหนี หมาเงาที่สามารถกดไปที่มันเเละจะวิ่ง
+    ไปหน้าสะพาน เเละสามารถกดปุ่ม reset เพื่อให้มันกลับไปที่เดิม เเละเรายังสามารถกดไปตรงกลางป่าตรงจุดสีฟ้าใส
+    เพื่อปลุกให้ลัตว์ประหลาดตื่นเเล้วจะส่งเสียงร้องออกมา ผมซ่อนปุ่มไว้ล่างซ้ายถ้ากดเจอ จะเจอ secret บางอย่าง
+        **ถ้าfunction ใช้ไม่ได้ให้ reset webpage หรือ ctrl+s ที่ตัว vs code หรือตัวเปิดต่างๆที่ใช้**
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horror Swamp</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        #butt{
+            display: block;
+            width: 50px;
+            height: 50px;
+            margin-top: 160px;
+            margin-left: 970px;
+            color: #afe8ed;
+            background-color: #afe8ed;
+            border-color: #afe8ed;
+            border: #afe8ed;
+        }
+        .firstImg {
+            filter: brightness(50%);
+            box-shadow: 100px 100px 400px 1px rgb(125, 247, 200);
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            transition: all 1s; 
+        }
+        
+        #f{
+            display: block;
+            margin-left: 200px;
+            margin-top: 100px;
+            position: relative;
+        }
+        #s{
+            display: block;
+            margin-left: 125px;
+            margin-top: 50px;
+            position: relative;
+        }
+        #t{
+            display: block;
+            margin-left: 170px;
+            margin-top: 0px;
+            position: relative;
+        }
+        #fo{
+            display: block;
+            margin-left: 100px;
+            margin-top: 0px;
+            position: relative;
+        }
+        #fi{
+            display: block;
+            margin-left: 225px;
+            margin-top: 0px;
+            position: relative;
+        }
+        
+        .SecondImg {
+            filter: brightness(50%);
+            box-shadow: 40px 40px 80px 10px rgb(125, 247, 200);
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            transition: all 1s; 
+        }
+        #f1{
+            display: block;
+            margin-left: 50px;
+            margin-top: 0px;
+        }
+        #s1{
+            display: block;
+            margin-left: 140px;
+            margin-top: 0px;
+        }
+        #t1{
+            display: block;
+            margin-left: 70px;
+            margin-top: 0px;
+        }
+        #fo1{
+            display: block;
+            margin-left: 225px;
+            margin-top: 0px;
+            position: absolute;
+        }
+        #fi1{
+            display: block;
+            margin-left: 170px;
+            margin-top: 10px;
+            position: absolute;
+        }
+        #creature {
+            width: 200px;
+            height: auto;
+            margin-top: 0px;
+            margin-left: 1100px;  
+            position:relative; 
+        }
+        #button{
+            display: block;
+            margin-top: 260px;
+            margin-left: 70px;
+            border: black;
+        }
+        #ResetButton{
+            display: block;
+            margin-left: 1800px;
+            color: #73fc7e;
+            background-color: #021618;
+        }
+    </style>
+    <script>
+        console.log("Hi")
+        console.log("Why are you looking at this?")
+    </script>
+</head>
+<body style="background-image: url(4c126e79e10732bdd5567c729fe9be01.jpeg);">
+    
+    <img class="firstImg" id="f" src="Lightning-Bug-Clipart-Firefly-PNG.png" onmouseover="Move()">
+    <img class="firstImg" id="s" src="Lightning-Bug-Clipart-Firefly-PNG.png">
+    <img class="firstImg" id="t" src="Lightning-Bug-Clipart-Firefly-PNG.png">
+    <img class="firstImg" id="fo" src="Lightning-Bug-Clipart-Firefly-PNG.png">
+    <img class="firstImg" id="fi" src="Lightning-Bug-Clipart-Firefly-PNG.png">
+    
+    <img class="SecondImg" id="f1" src="123.png">
+    <img class="SecondImg" id="s1" src="123.png">
+    <img class="SecondImg" id="t1" src="123.png">
+    <img class="SecondImg" id="fo1" src="123.png">
+    <img class="SecondImg" id="fi1" src="123.png">
+
+    <button id="butt" type="button" onclick="PlaySound()">
+        HI
+    </button>
+
+    <img id="creature" src="456.png" onclick="largeImg()">
+
+    <button id="button" type="button" style="background-color: black;">
+        <a href="https://youtu.be/dQw4w9WgXcQ" style="color: black;">HI</a>
+    </button>
+
+    <audio id="Audio1" autoplay loop src="Monster Sound Effects.mp3"></audio>
+    
+    <button id="ResetButton" onclick="resetImg()">Reset</button>
+
+    <script>
+        
+        const object = document.getElementById('f')
+
+        object.onmouseover=function(){
+            let x = Math.floor(Math.random()*300)
+            let y = Math.floor(Math.random()*300)
+
+            object.style.top = x + 'px'
+            object.style.left = y + 'px'
+        }
+
+        const object2 = document.getElementById('s')
+
+        object2.onmouseover=function(){
+            let x = Math.floor(Math.random()*300)
+            let y = Math.floor(Math.random()*300)
+
+            object2.style.top = x + 'px'
+            object2.style.left = y + 'px'
+        } 
+
+        const object3 = document.getElementById('t')
+
+        object3.onmouseover=function(){
+            let x = Math.floor(Math.random()*300)
+            let y = Math.floor(Math.random()*300)
+
+            object3.style.top = x + 'px'
+            object3.style.left = y + 'px'
+        } 
+
+        const object4 = document.getElementById('fo')
+
+        object4.onmouseover=function(){
+            let x = Math.floor(Math.random()*300)
+            let y = Math.floor(Math.random()*300)
+
+            object4.style.top = x + 'px'
+            object4.style.left = y + 'px'
+        } 
+
+        const object5 = document.getElementById('fi')
+
+        object5.onmouseover=function(){
+            let x = Math.floor(Math.random()*300)
+            let y = Math.floor(Math.random()*300)
+
+            object5.style.top = x + 'px'
+            object5.style.left = y + 'px'
+        } 
+
+        const object6 = document.getElementById('fo1')
+
+        object6.onmouseover=function(){
+            let x = Math.floor(Math.random()*300)
+            let y = Math.floor(Math.random()*300)
+
+            object6.style.top = x + 'px'
+            object6.style.left = y + 'px'
+        } 
+
+        const object7 = document.getElementById('fi1')
+
+        object7.onmouseover=function(){
+            let x = Math.floor(Math.random()*300)
+            let y = Math.floor(Math.random()*300)
+
+            object7.style.top = x + 'px'
+            object7.style.left = y + 'px'
+        } 
+        
+        function PlaySound() {
+        let audio = new Audio("Scary Monster Screeching Sound - Sound Effects.mp3");
+        audio.play()
+        }
+
+
+        let Audio1 = document.getElementById('Audio1')
+        Audio1.volume = 0.2
+
+        const creature = document.getElementById('creature')
+
+        creature.addEventListener("click", begin)
+
+        function begin(){
+            let timerId = null
+            let x = 0
+            let y = 0
+
+            setInterval(frame, 2)
+
+            function frame(){
+                if(x >=10 || y>=250){
+                    clearInterval(timerId)
+                }
+                else{
+                    x-=1
+                    y+=1
+                    creature.style.left = x + 'px'
+                    creature.style.top = y + 'px'
+                }
+            }
+        }
+        function largeImg() {
+            creature.style.transform = "scale(1.5)"
+        
+            creature.style.transition = "transform 0.25s ease"
+        }
+
+        function resetImg() {
+            let timerId = null
+            let x = 0
+            let y = 0
+
+            setInterval(frame, 6)
+
+            function frame(){
+                if(x >=10 || y>=250){
+                    clearInterval(timerId)
+                }
+                else{
+                    x+=1
+                    y+=1
+                    creature.style.left = x + 'px'
+                    creature.style.top = y + 'px'
+                }
+            }
+
+            creature.style.transform = "scale(1)"
+            creature.style.transition = "transform 0.25s ease"
+        }
+
+
+        
+    </script>
+</body>
+</html>
